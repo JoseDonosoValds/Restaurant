@@ -1,4 +1,4 @@
-.card{
+/* .card{
     margin: 5px;
     padding: 5px;
     height: 100%;
@@ -38,4 +38,18 @@ label{
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
+.App {
+    text-align: center;
+  }
+  
+  .container-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .container {
+    margin: 10px;
+  }
