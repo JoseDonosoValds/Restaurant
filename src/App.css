@@ -128,35 +128,4 @@
   div > div {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  div > div select {
-    flex-grow: 1;
-  }
-  
-  div > div input[type="number"] {
-    width: 60px;
-  }
-  
-  div > div button {
-    background-color: #dc3545; /* Rojo para el botón de eliminar */
-  }
-  
-  div > div button:hover {
-    background-color: #c82333;
-  }
-  
-  div > span {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 20px;
-    display: block;
-    text-align: right;
-  }
-  .rojo{
-    color: red;
-  }
- /* Estilos de card */ 
-  
+}

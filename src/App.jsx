@@ -1,131 +1,91 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import axios from "axios";
-import Modal from "./components/Modal";
-import ModalPedido from "./components/ModalPedido";
 
 function App() {
-  const endpointMesa = "http://localhost:4000/api/restaurant/mesa";
-  const endpointLiberarMesa = "http://localhost:4000/api/restaurant/libre";
-  const endpointPorPagar = "http://localhost:4000/api/restaurant/entregado";
+  const mesas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const [formData, setFormData] = useState({});
 
-  const [modals, setModals] = useState({});
-  const [modalType, setModalType] = useState(null); // Tipo de modal
-  const [dataMesa, setDataMesa] = useState([]);
-  const [mesaIdModal, setMesaIdModal] = useState(null); // ID de la mesa para el modal
-
-  useEffect(() => {
-    fetchMesaData(); // Obtiene los datos de las mesas al cargar el componente
-  }, []);
-
-  const fetchMesaData = async () => {
-    try {
-      const response = await axios.get(endpointMesa);
-      setDataMesa(response.data);
-    } catch (error) {
-      console.log("Error fetching data: ", error);
-    }
+  const addToCart = (e, mesaId) => {
+    e.preventDefault();
+    console.log(formData[mesaId]);
+    setFormData({})
   };
 
-  const openModal = (index, type) => {
-    setMesaIdModal(index);
-    setModalType(type);
-    setModals((prevModals) => ({
-      ...prevModals,
-      [index]: true,
+  const infInput = (e, mesaId) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [mesaId]: {
+        ...prevFormData[mesaId],
+        [name]: value,
+      }
     }));
-  };
-
-  const closeModal = () => {
-    setModals((prevModals) => ({
-      ...prevModals,
-      [mesaIdModal]: false,
-    }));
-    setMesaIdModal(null);
-    setModalType(null);
-  };
-
-  const updateMesaState = async () => {
-    await fetchMesaData();
-  };
-
-  const handlePedidoEntregado = async (id_mesa) => {
-    try {
-      await axios.put(endpointPorPagar, {
-        id_mesa,
-      });
-      await updateMesaState();
-    } catch (error) {
-      console.error("Error al marcar pedido como entregado:", error);
-    }
-  };
-
-  const handlePagado = async (mesa_id) => {
-    try {
-      await axios.put(endpointLiberarMesa, {
-        id_mesa: mesa_id,
-      });
-      await updateMesaState();
-    } catch (error) {
-      console.error("Error al marcar como pagado:", error);
-    }
+    console.log(formData)
   };
 
   return (
-    <div className="App">
-    <div className="container-grid">
-      {dataMesa?.map((mesa) => (
-        <div key={mesa.id_mesa} className="card">
-          <div className="card-image">
-            <img src="../public/mesa2.png" alt="imagen de mesa con copas" />
-          </div>
-          <div className="card-info">
-            <h5>{mesa.estado_mesa}</h5>
-            <button
-              className="tomarPedido"
-              onClick={() => openModal(mesa.id_mesa, 'tomarPedido')}
-            >
-              Tomar pedido {mesa.id_mesa}
-            </button>
-          </div>
-          <div className="card-buttons">
-            <button
-              className="tomarPedido"
-              onClick={() => openModal(mesa.id_mesa, 'verPedido')}
-            >
-              Ver pedido
-            </button>
-            <button
-              className="tomarPedido"
-              onClick={() => handlePagado(mesa.id_mesa)}
-            >
-              Pagado
-            </button>
-            <button
-              className="tomarPedido"
-              onClick={() => handlePedidoEntregado(mesa.id_mesa)}
-            >
-              Pedido entregado
-            </button>
-          </div>
-          <ModalPedido
-            isOpen={modalType === 'verPedido' && mesaIdModal === mesa.id_mesa}
-            onClose={closeModal}
-            mesa={mesaIdModal}
-            onUpdateMesa={updateMesaState}
-          />
-          <Modal
-            isOpen={modalType === 'tomarPedido' && mesaIdModal === mesa.id_mesa}
-            onClose={closeModal}
-            mesa={mesaIdModal}
-            onSubmit={() => {}} // Ajusta si es necesario
-            onUpdateMesa={updateMesaState}
-          />
+    <main className="container">
+      {mesas.map((item) => (
+        <div key={item} className="card">
+          <h2>Mesa {item}</h2>
+          <article className="art">
+            <form className="formulario" onSubmit={(e) => addToCart(e, item)}>
+              <label htmlFor={`mesa-${item}`}>
+                Mesa:
+                <input
+                  id={`mesa-${item}`}
+                  type="text"
+                  name="mesa"
+                  onChange={(e) => infInput(e, item)}
+                  value={formData[item]?.mesa || ""}
+                />
+              </label>
+              <label htmlFor={`id-${item}`}>
+                ID:
+                <input
+                  id={`id-${item}`}
+                  type="text"
+                  name="id"
+                  onChange={(e) => infInput(e, item)}
+                  value={formData[item]?.id || ""}
+                />
+              </label>
+              <label htmlFor={`nombre-${item}`}>
+                Nombre:
+                <input
+                  id={`nombre-${item}`}
+                  type="text"
+                  name="nombre"
+                  onChange={(e) => infInput(e, item)}
+                  value={formData[item]?.nombre || ""}
+                />
+              </label>
+              <label htmlFor={`comida-${item}`}>
+                Comida:
+                <input
+                  id={`comida-${item}`}
+                  type="text"
+                  name="comida"
+                  onChange={(e) => infInput(e, item)}
+                  value={formData[item]?.comida || ""}
+                />
+              </label>
+              <label htmlFor={`bebida-${item}`}>
+                Bebida:
+                <input
+                  id={`bebida-${item}`}
+                  type="text"
+                  name="bebida"
+                  onChange={(e) => infInput(e, item)}
+                  value={formData[item]?.bebida || ""}
+                />
+              </label>
+              <button type="submit">Agregar</button>
+            </form>
+          </article>
         </div>
       ))}
-    </div>
-  </div>
-  
+    </main>
   );
 }
 
