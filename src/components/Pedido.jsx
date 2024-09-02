@@ -1,23 +1,10 @@
 import React from "react";
 
 const Pedido = ({ mesa, opciones, cerrarPedido, formData, infInput, addToCart }) => {
-  const [pedido, setPedido] = React.useState({});
-
-  const handleOpcion = (opcion) => {
-    setPedido((prevPedido) => ({ ...prevPedido, [opcion]: true }));
-  };
-
-  const handleGuardarPedido = (e) => {
-    e.preventDefault();
-    console.log("Pedido guardado:", pedido);
-    addToCart(e, mesa.id);
-    cerrarPedido();
-  };
-
   return (
     <div className="popup">
       <h2>Pedido para la Mesa {mesa.numero}</h2>
-      <form onSubmit={handleGuardarPedido}>
+      <form onSubmit={(e) => addToCart(e, mesa.id)}>
         <label htmlFor={`mesa-${mesa.id}`}>
           Mesa:
           <input
@@ -71,11 +58,7 @@ const Pedido = ({ mesa, opciones, cerrarPedido, formData, infInput, addToCart })
         <ul>
           {opciones.map((opcion) => (
             <li key={opcion}>
-              <input
-                type="checkbox"
-                checked={pedido[opcion]}
-                onChange={() => handleOpcion(opcion)}
-              />
+              <input type="checkbox" />
               <span>{opcion}</span>
             </li>
           ))}
