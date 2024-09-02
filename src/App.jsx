@@ -38,6 +38,9 @@ function App() {
       <div className="container-grid">
         {modals.map((_, index) => (
           <div key={index} className="container">
+            <div className="contenedorImagen">
+              <img src="../public/mesa2.png" alt="imagen de mesa con copas" />
+            </div>
             <button onClick={() => openModal(index)}>Agregar Mesa {index + 1}</button>
             <Modal
               isOpen={modals[index]}

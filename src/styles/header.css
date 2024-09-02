@@ -1,7 +1,7 @@
 .header{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   height: 200px;
   background-color: rgba(0, 0, 0, 0.589);
@@ -10,4 +10,36 @@
 h1{
   color: rgba(255, 255, 0, 0.664);
   font-size: 50px;
+}
+.contenedorNav{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+  ul{
+display: flex;
+flex-direction: row;
+}
+ul, li{
+  margin-left: 14px;
+list-style: none;
+font-size: 20px;
+font-weight: 600;
+cursor: pointer;
+}
+li:hover{
+color:rgba(255, 255, 0, 0.664); ;
+}
+h1{
+  width: 50%;
+  cursor: pointer;
+}
+nav{
+  margin-right: 20px;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
 }
