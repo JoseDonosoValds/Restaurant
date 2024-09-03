@@ -4,6 +4,7 @@
   }
   
   .container-grid {
+    height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -21,7 +22,7 @@
     margin: 10px;
     width: 400px;
     height: 150px;
-    background-color: rgba(255, 255, 0, 0.329);
+   
   }
 .container img{
     width: 100%;
@@ -30,4 +31,84 @@
 .contenedorImagen{
     
     margin-bottom: 30px;
+}
+.footer{
+    
+margin-bottom: 0;
+    height: 100px;
+    background: #3d3d3d;
+}
+/* Footer .......... */
+.divfooter {
+    padding: 15px 0;
+    background-color: #f0dfc5;   
+}
+.divfooter h2 {
+    text-align: center;
+
+    margin: 0;
+    padding: 0;
+}
+.divfooter p {
+    color: rgba(0, 0, 0, 0.43);
+    text-align: center;
+}
+.divfooter hr {
+    color: gray;
+    text-align: center;
+    align-items: center;
+    width: 90%;
+}
+.divfooter div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.uldiv {
+    padding: 20px 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
+li {
+    list-style: none;
+}
+li span {
+    color: #4f4d4a;
+    font-size: 20px;
+}
+.uldiv1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.uldiv1 li {
+    margin-bottom: 5px;
+
+    color: #4f4d4a;
+}
+.uldiv li {
+    border-radius: 16px;
+    margin: 5px;
+    padding: 8px;
+
+    cursor: pointer;
+    transition: 300ms;
+}
+.uldiv li:hover {
+    background-color: #4f4d4a6e;
+}
+.divFF {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    align-items: center;
+}
+.divfooter p {
+    padding: 0 10px;
 }

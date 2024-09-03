@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import '../styles/modal.css';
 
-const Modal = ({ isOpen, onClose, onSubmit }) => {
+const Modal = ({ isOpen, onClose, onSubmit ,mesa}) => {
+
   const [formData, setFormData] = useState({
     id: '',
     mesa: '',
@@ -45,7 +46,7 @@ const Modal = ({ isOpen, onClose, onSubmit }) => {
             <input
               type="text"
               name="mesa"
-              value={formData.mesa}
+              value={mesa}
               onChange={handleChange}
             />
           </label>

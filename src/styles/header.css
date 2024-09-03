@@ -4,8 +4,8 @@
   justify-content: start;
   align-items: center;
   height: 200px;
-  background-color: rgba(0, 0, 0, 0.589);
   width: 100%;  
+   background-color: #f0dfc5;
 }
 h1{
   color: rgba(255, 255, 0, 0.664);
@@ -29,7 +29,7 @@ font-size: 20px;
 font-weight: 600;
 cursor: pointer;
 }
-li:hover{
+nav li:hover{
 color:rgba(255, 255, 0, 0.664); ;
 }
 h1{
