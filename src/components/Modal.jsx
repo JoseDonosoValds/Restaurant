@@ -1,20 +1,19 @@
-import { useState } from 'react';
-import '../styles/modal.css';
+import { useState } from "react";
+import "../styles/modal.css";
 
-const Modal = ({ isOpen, onClose, onSubmit ,mesa}) => {
-
+const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
   const [formData, setFormData] = useState({
-    id: '',
-    mesa: '',
-    comida: '',
-    bebida: ''
+    id: "",
+    mesa: mesa,
+    comida: "",
+    bebida: ""
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -22,14 +21,19 @@ const Modal = ({ isOpen, onClose, onSubmit ,mesa}) => {
     e.preventDefault();
     onSubmit(formData);
     onClose();
-    setFormData({})
+    setFormData({
+      id: "",
+      mesa: mesa,
+      comida: "",
+      bebida: ""
+    });
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>X</button>
         <form onSubmit={handleSubmit}>
           <label>
@@ -47,7 +51,7 @@ const Modal = ({ isOpen, onClose, onSubmit ,mesa}) => {
               type="text"
               name="mesa"
               value={mesa}
-              onChange={handleChange}
+              readOnly
             />
           </label>
           <label>
@@ -74,7 +78,4 @@ const Modal = ({ isOpen, onClose, onSubmit ,mesa}) => {
     </div>
   );
 };
-
-
-
 export default Modal
