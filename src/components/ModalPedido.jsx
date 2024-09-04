@@ -53,16 +53,17 @@ const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
         {pedido ? (
           <>
             <h3>ID Pedido: {pedido.id_pedido}</h3>
+            <h4>Comida:</h4>
             <div>
-              <h4>Comida:</h4>
+      
               {pedido.comida.map((item, index) => (
                 <div key={index}>
                   <p>{item.name_product} - Cantidad: {item.cantidad} - Precio: ${item.price}</p>
                 </div>
               ))}
             </div>
+            <h4>Bebida:</h4>
             <div>
-              <h4>Bebida:</h4>
               {pedido.bebida.map((item, index) => (
                 <div key={index}>
                   <p>{item.name_product} - Cantidad: {item.cantidad} - Precio: ${item.price}</p>
