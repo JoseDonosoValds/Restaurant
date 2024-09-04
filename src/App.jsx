@@ -5,6 +5,9 @@ import Modal from "./components/Modal";
 
 function App() {
   const endpointMesa = "http://localhost:4000/api/restaurant/mesa";
+  const endpointLiberarMesa = "http://localhost:4000/api/restaurant/libre";
+  const endpointPorPagar = "http://localhost:4000/api/restaurant/entregado";
+
   const [modals, setModals] = useState({});
   const [modalIndex, setModalIndex] = useState(null);
   const [dataMesa, setDataMesa] = useState([]);
@@ -16,6 +19,7 @@ function App() {
   const fetchMesaData = async () => {
     try {
       const response = await axios.get(endpointMesa);
+      console.log("Datos de la mesa:", response.data); // Verifica si id_pedido está presente
       setDataMesa(response.data);
     } catch (error) {
       console.log("Error fetching data: ", error);
@@ -43,15 +47,17 @@ function App() {
   };
 
   const updateMesaState = async () => {
-    await fetchMesaData(); // Vuelve a obtener los datos de las mesas
+    await fetchMesaData();
   };
 
-  const handlePedidoEntregado = async (mesa_id) => {
+  const handlePedidoEntregado = async (id_mesa) => {
+    console.log("ID de la mesa:", id_mesa); // Imprime el ID de la mesa
+
     try {
-      await axios.post("http://localhost:4000/api/restaurant/entregado", {
-        mesa_id,
+      await axios.put(endpointPorPagar, {
+        id_mesa, // Envía el id_mesa en lugar del id_pedido
       });
-      await updateMesaState(); // Actualiza el estado de las mesas después de marcar como entregado
+      await updateMesaState();
     } catch (error) {
       console.error("Error al marcar pedido como entregado:", error);
     }
@@ -59,10 +65,10 @@ function App() {
 
   const handlePagado = async (mesa_id) => {
     try {
-      await axios.post("http://localhost:4000/api/restaurant/pagado", {
-        mesa_id,
+      await axios.put(endpointLiberarMesa, {
+        id_mesa: mesa_id,
       });
-      await updateMesaState(); // Actualiza el estado de las mesas después de marcar como pagado
+      await updateMesaState();
     } catch (error) {
       console.error("Error al marcar como pagado:", error);
     }
