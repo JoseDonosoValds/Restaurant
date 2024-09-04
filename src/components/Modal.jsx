@@ -7,6 +7,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
   const AddPedido = "http://localhost:4000/api/restaurant/addPedido"; // Endpoint para agregar pedido
 
   const [productos, setProductos] = useState([]);
+  const [totalPedido, setTotalPedido] = useState(0); // Nuevo estado para el total del pedido
   const [formData, setFormData] = useState({
     camarero_id: "",
     mesa_id: mesa || "", // Inicializa el estado del formulario con el valor de la prop mesa
@@ -35,6 +36,10 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
     }));
   }, [mesa]);
 
+  useEffect(() => {
+    calcularTotalPedido(); // Calcula el total cada vez que cambian los productos seleccionados
+  }, [formData.comida, formData.bebida]);
+
   const comidaOptions = productos.filter(producto => producto.categoria_id === 601);
   const bebidaOptions = productos.filter(producto => producto.categoria_id === 600);
 
@@ -56,6 +61,30 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
     });
   };
 
+  const calcularTotalPedido = () => {
+    let total = 0;
+    
+    formData.comida.forEach((item) => {
+      const producto = productos.find(producto => producto.id_product === parseInt(item.id));
+      if (producto) {
+        total += producto.price * item.cantidad;
+      }
+    });
+
+    formData.bebida.forEach((item) => {
+      const producto = productos.find(producto => producto.id_product === parseInt(item.id));
+      if (producto) {
+        total += producto.price * item.cantidad;
+      }
+    });
+
+    setTotalPedido(total);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      total_pedido: total, // Añade el total al formData
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -69,7 +98,9 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
         genero: "",
         comida: [],
         bebida: [],
+        total_pedido: 0, // Reinicia el total al enviar el formulario
       });
+      setTotalPedido(0); // Reinicia el total al enviar el formulario
     } catch (error) {
       console.error("Error al enviar el pedido:", error);
     }
@@ -122,7 +153,8 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
                   <option value="">Seleccione comida</option>
                   {comidaOptions.map((producto) => (
                     <option key={producto.id_product} value={producto.id_product}>
-                      {producto.name_product}
+                      {producto.name_product}-
+                      ${producto.price}
                     </option>
                   ))}
                 </select>
@@ -150,7 +182,8 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
                   <option value="">Seleccione bebida</option>
                   {bebidaOptions.map((producto) => (
                     <option key={producto.id_product} value={producto.id_product}>
-                      {producto.name_product}
+                      {producto.name_product}-
+                      ${producto.price}
                     </option>
                   ))}
                 </select>
@@ -161,11 +194,14 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
                   onChange={(e) => handleChange(e, index, "bebida")}
                   min="1"
                 />
+           
               </div>
             ))}
             <button type="button" onClick={() => addItem("bebida")}>Agregar Bebida</button>
           </div>
-
+          <div>
+            <span>Total Pedido: {totalPedido} </span> 
+          </div>
           <button type="submit">Enviar</button>
         </form>
       </div>
