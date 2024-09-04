@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/modal.css";
 import axios from "axios";
 
-const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
+const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
   const Pedidos = "http://localhost:4000/api/restaurant/product";
   const AddPedido = "http://localhost:4000/api/restaurant/addPedido"; // Endpoint para agregar pedido
 
@@ -91,6 +91,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
       // Envía los datos al endpoint para agregar el pedido
       await axios.post(AddPedido, formData);
       onSubmit(formData); // Llama a la función onSubmit pasada desde el componente padre
+      onUpdateMesa(); // Llama a la función para actualizar el estado de la mesa en el componente padre
       onClose(); // Cierra el modal
       setFormData({
         camarero_id: "",
