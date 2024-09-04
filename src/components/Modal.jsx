@@ -3,8 +3,8 @@ import "../styles/modal.css";
 import axios from "axios";
 
 const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
-  const Pedidos = "http://localhost:4000/api/restaurant/product";
-  const AddPedido = "http://localhost:4000/api/restaurant/addPedido"; 
+  const Pedidos = "http://localhost:4001/api/restaurant/product";
+  const AddPedido = "http://localhost:4001/api/restaurant/addPedido"; 
 
   const [productos, setProductos] = useState([]);
   const [totalPedido, setTotalPedido] = useState(0); // Nuevo estado para el total del pedido

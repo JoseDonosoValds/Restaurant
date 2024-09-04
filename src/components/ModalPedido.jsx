@@ -3,9 +3,9 @@ import "../styles/modal.css";
 import axios from "axios";
 
 const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
-  const endpointVerPedido = "http://localhost:4000/api/restaurant/verPedido";
-  const endpointUpdatePedido = "http://localhost:4000/api/restaurant/updatePedido";
-  const endpointGetProducts = "http://localhost:4000/api/restaurant/product"; // Endpoint para obtener los productos
+  const endpointVerPedido = "http://localhost:4001/api/restaurant/verPedido";
+  const endpointUpdatePedido = "http://localhost:4001/api/restaurant/updatePedido";
+  const endpointGetProducts = "http://localhost:4001/api/restaurant/product"; // Endpoint para obtener los productos
 
   const [pedido, setPedido] = useState(null);
   const [totalPedido, setTotalPedido] = useState(0);

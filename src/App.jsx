@@ -5,9 +5,9 @@ import Modal from "./components/Modal";
 import ModalPedido from "./components/ModalPedido";
 
 function App() {
-  const endpointMesa = "http://localhost:4000/api/restaurant/mesa";
-  const endpointLiberarMesa = "http://localhost:4000/api/restaurant/libre";
-  const endpointPorPagar = "http://localhost:4000/api/restaurant/entregado";
+  const endpointMesa = "http://localhost:4001/api/restaurant/mesa";
+  const endpointLiberarMesa = "http://localhost:4001/api/restaurant/libre";
+  const endpointPorPagar = "http://localhost:4001/api/restaurant/entregado";
 
   const [modals, setModals] = useState({});
   const [modalType, setModalType] = useState(null); // Tipo de modal
@@ -73,61 +73,59 @@ function App() {
 
   return (
     <div className="App">
-      <div className="container-grid">
-        {dataMesa?.map((mesa) => (
-          <div key={mesa.id_mesa} className="container">
-            <div className="contenedorImagen">
-              <img src="../public/mesa2.png" alt="imagen de mesa con copas" />
-            </div>
-            <div>
-              <div>
-                <button
-                  className="tomarPedido"
-                  onClick={() => openModal(mesa.id_mesa, 'verPedido')}
-                >
-                  Ver pedido
-                </button>
-              </div>
-              <div>
-                <button
-                  className="tomarPedido"
-                  onClick={() => handlePagado(mesa.id_mesa)}
-                >
-                  Pagado
-                </button>
-              </div>
-              <button
-                className="tomarPedido"
-                onClick={() => handlePedidoEntregado(mesa.id_mesa)}
-              >
-                Pedido entregado
-              </button>
-            </div>
+    <div className="container-grid">
+      {dataMesa?.map((mesa) => (
+        <div key={mesa.id_mesa} className="card">
+          <div className="card-image">
+            <img src="../public/mesa2.png" alt="imagen de mesa con copas" />
+          </div>
+          <div className="card-info">
+            <h5>{mesa.estado_mesa}</h5>
             <button
               className="tomarPedido"
               onClick={() => openModal(mesa.id_mesa, 'tomarPedido')}
             >
               Tomar pedido {mesa.id_mesa}
             </button>
-            <h5>{mesa.estado_mesa}</h5>
-
-            <ModalPedido
-              isOpen={modalType === 'verPedido' && mesaIdModal === mesa.id_mesa}
-              onClose={closeModal}
-              mesa={mesaIdModal}
-              onUpdateMesa={updateMesaState}
-            />
-            <Modal
-              isOpen={modalType === 'tomarPedido' && mesaIdModal === mesa.id_mesa}
-              onClose={closeModal}
-              mesa={mesaIdModal}
-              onSubmit={() => {}} // Ajusta si es necesario
-              onUpdateMesa={updateMesaState}
-            />
           </div>
-        ))}
-      </div>
+          <div className="card-buttons">
+            <button
+              className="tomarPedido"
+              onClick={() => openModal(mesa.id_mesa, 'verPedido')}
+            >
+              Ver pedido
+            </button>
+            <button
+              className="tomarPedido"
+              onClick={() => handlePagado(mesa.id_mesa)}
+            >
+              Pagado
+            </button>
+            <button
+              className="tomarPedido"
+              onClick={() => handlePedidoEntregado(mesa.id_mesa)}
+            >
+              Pedido entregado
+            </button>
+          </div>
+          <ModalPedido
+            isOpen={modalType === 'verPedido' && mesaIdModal === mesa.id_mesa}
+            onClose={closeModal}
+            mesa={mesaIdModal}
+            onUpdateMesa={updateMesaState}
+          />
+          <Modal
+            isOpen={modalType === 'tomarPedido' && mesaIdModal === mesa.id_mesa}
+            onClose={closeModal}
+            mesa={mesaIdModal}
+            onSubmit={() => {}} // Ajusta si es necesario
+            onUpdateMesa={updateMesaState}
+          />
+        </div>
+      ))}
     </div>
+  </div>
+  
   );
 }
 
