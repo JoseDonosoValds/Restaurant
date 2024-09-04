@@ -4,17 +4,19 @@ import axios from "axios";
 
 const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
   const Pedidos = "http://localhost:4000/api/restaurant/product";
-  const AddPedido = "http://localhost:4000/api/restaurant/addPedido"; 
+  const AddPedido = "http://localhost:4000/api/restaurant/addPedido";
 
   const [productos, setProductos] = useState([]);
-  const [totalPedido, setTotalPedido] = useState(0); 
+  const [totalPedido, setTotalPedido] = useState(0);
   const [formData, setFormData] = useState({
     camarero_id: "",
-    mesa_id: mesa || "", 
+    mesa_id: mesa || "",
     genero: "",
     comida: [],
     bebida: [],
   });
+
+  const [errorValorPrecio,setValorPrecio]= useState("")
 
   useEffect(() => {
     const getProductos = async () => {
@@ -30,7 +32,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
   }, []);
 
   useEffect(() => {
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       mesa_id: mesa || "", // Actualiza el valor de mesa_id si cambia la prop
     }));
@@ -40,8 +42,12 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
     calcularTotalPedido(); // Calcula el total cada vez que cambian los productos seleccionados
   }, [formData.comida, formData.bebida]);
 
-  const comidaOptions = productos.filter(producto => producto.categoria_id === 601);
-  const bebidaOptions = productos.filter(producto => producto.categoria_id === 600);
+  const comidaOptions = productos.filter(
+    (producto) => producto.categoria_id === 601
+  );
+  const bebidaOptions = productos.filter(
+    (producto) => producto.categoria_id === 600
+  );
 
   const handleChange = (e, index, type) => {
     const { name, value } = e.target;
@@ -54,7 +60,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
   };
 
   const addItem = (type) => {
-    const newItem = { id: "", cantidad: 1 }; 
+    const newItem = { id: "", cantidad: 1 };
     setFormData({
       ...formData,
       [type]: [...formData[type], newItem],
@@ -63,16 +69,20 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
 
   const calcularTotalPedido = () => {
     let total = 0;
-    
+
     formData.comida.forEach((item) => {
-      const producto = productos.find(producto => producto.id_product === parseInt(item.id));
+      const producto = productos.find(
+        (producto) => producto.id_product === parseInt(item.id)
+      );
       if (producto) {
         total += producto.price * item.cantidad;
       }
     });
 
     formData.bebida.forEach((item) => {
-      const producto = productos.find(producto => producto.id_product === parseInt(item.id));
+      const producto = productos.find(
+        (producto) => producto.id_product === parseInt(item.id)
+      );
       if (producto) {
         total += producto.price * item.cantidad;
       }
@@ -88,23 +98,45 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Envía los datos al endpoint para agregar el pedido
-      await axios.post(AddPedido, formData);
-      onSubmit(formData); // Llama a la función onSubmit pasada desde el componente padre
-      onUpdateMesa(); // Llama a la función para actualizar el estado de la mesa en el componente padre
-      onClose(); // Cierra el modal
-      setFormData({
-        camarero_id: "",
-        mesa_id: mesa || "", 
-        genero: "",
-        comida: [],
-        bebida: [],
-        total_pedido: 0, // Reinicia el total al enviar el formulario
-      });
-      setTotalPedido(0); // Reinicia el total al enviar el formulario
+      if (totalPedido == 0) {
+        return setValorPrecio("Error, no puedes agragra productos con valor 0");
+      } else {
+        setValorPrecio("");
+      }
+      const validIds = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109];
+
+      if (!validIds.includes(parseInt(formData.camarero_id))) {
+        alert("El ID que ingresó no es el correcto");
+      } else {
+        await axios.post(AddPedido, formData);
+        onSubmit(formData);
+        onClose();
+        setFormData({
+          camarero_id: "",
+          mesa_id: mesa || "",
+          genero: "",
+          comida: [],
+          bebida: [],
+          total_pedido: 0,
+        });
+        setTotalPedido(0);
+      }
     } catch (error) {
       console.error("Error al enviar el pedido:", error);
     }
+  };
+
+  const deleteComida = (index, type) => {
+    const newItem = formData[type].filter((_, i) => i !== index);
+    setFormData({ ...formData, [type]: newItem });
+    console.log(event);
+  };
+  const deleteBebida = (index, type) => {
+    const newBebida = formData[type].filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      [type]: newBebida,
+    });
   };
 
   if (!isOpen) return null;
@@ -122,7 +154,9 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
               type="text"
               name="camarero_id"
               value={formData.camarero_id}
-              onChange={(e) => setFormData({ ...formData, camarero_id: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, camarero_id: e.target.value })
+              }
             />
           </label>
           <label>
@@ -130,7 +164,9 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
             <select
               name="genero"
               value={formData.genero}
-              onChange={(e) => setFormData({ ...formData, genero: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, genero: e.target.value })
+              }
             >
               <option value="">Seleccione un género</option>
               <option value="F">Femenino</option>
@@ -139,7 +175,8 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
           </label>
           <label>
             Mesa:
-            <span>{formData.mesa_id}</span> {/* Muestra el ID de la mesa como texto */}
+            <span>{formData.mesa_id}</span>{" "}
+            {/* Muestra el ID de la mesa como texto */}
           </label>
 
           <div>
@@ -153,9 +190,11 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
                 >
                   <option value="">Seleccione comida</option>
                   {comidaOptions.map((producto) => (
-                    <option key={producto.id_product} value={producto.id_product}>
-                      {producto.name_product}-
-                      ${producto.price}
+                    <option
+                      key={producto.id_product}
+                      value={producto.id_product}
+                    >
+                      {producto.name_product}- ${producto.price}
                     </option>
                   ))}
                 </select>
@@ -166,9 +205,17 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
                   onChange={(e) => handleChange(e, index, "comida")}
                   min="1"
                 />
+                <button
+                  type="button"
+                  onClick={() => deleteComida(index, "comida")}
+                >
+                  X
+                </button>
               </div>
             ))}
-            <button type="button" onClick={() => addItem("comida")}>Agregar Comida</button>
+            <button type="button" onClick={() => addItem("comida")}>
+              Agregar Comida
+            </button>
           </div>
 
           <div>
@@ -182,9 +229,11 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
                 >
                   <option value="">Seleccione bebida</option>
                   {bebidaOptions.map((producto) => (
-                    <option key={producto.id_product} value={producto.id_product}>
-                      {producto.name_product}-
-                      ${producto.price}
+                    <option
+                      key={producto.id_product}
+                      value={producto.id_product}
+                    >
+                      {producto.name_product}- ${producto.price}
                     </option>
                   ))}
                 </select>
@@ -195,13 +244,21 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
                   onChange={(e) => handleChange(e, index, "bebida")}
                   min="1"
                 />
-           
+                <button
+                  type="button"
+                  onClick={() => deleteBebida(index, "bebida")}
+                >
+                  X
+                </button>
               </div>
             ))}
-            <button type="button" onClick={() => addItem("bebida")}>Agregar Bebida</button>
+            <button type="button" onClick={() => addItem("bebida")}>
+              Agregar Bebida
+            </button>
           </div>
           <div>
-            <span>Total Pedido: {totalPedido} </span> 
+            <p className="rojo">{errorValorPrecio}</p>
+            <span>Total Pedido: {totalPedido} </span>
           </div>
           <button type="submit">Enviar</button>
         </form>
