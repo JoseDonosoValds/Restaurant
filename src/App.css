@@ -1,135 +1,158 @@
-
-.App {
-    text-align: center;
-   
-   
-  }
-  
-  .container-grid {
-    
-    height: 100vh;
+ 
+.container-grid {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 20px; /* Espacio entre las tarjetas */
   }
   
   .container {
-   padding-top: 5px;
-    margin: 10px;
-    border-radius: 5px;
-    border-style: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    margin: 10px;
-    width: 22%;
-    border-style: solid;
-    border-width: 1px;
-   
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 500px; /* Ajusta el tamaño de la tarjeta */
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
   }
-  .container .tomarPedido{
-    border-style: none;
-    background-color: rgba(250, 250, 5, 0.705);
-    border-radius: 5px;
-    padding: 5px;
-    border-color: #4f4d4a;
-    margin-bottom: 5px;
+  
+/*   .container:hover {
+    transform: scale(1.05);
+  } */
+  
+  .contenedorImagen {
+    margin-bottom: 15px;
   }
-  .container .tomarPedido:hover{
-    background-color: yellow;
-  }
-.container img{
+  
+  .contenedorImagen img {
     width: 100%;
-    border-radius: 10px 10px 0 0; 
-}
-.contenedorImagen{
-    
-    margin-bottom: 30px;
-}
-.footer{
-    
-margin-bottom: 0;
-    height: 100px;
-    background: #3d3d3d;
-}
-/* Footer .......... */
-.divfooter {
-    padding: 15px 0;
-    background-color: #f0dfc5;   
-}
-.divfooter h2 {
-    text-align: center;
-
-    margin: 0;
-    padding: 0;
-}
-.divfooter p {
-    color: rgba(0, 0, 0, 0.43);
-    text-align: center;
-}
-.divfooter hr {
-    color: gray;
-    text-align: center;
-    align-items: center;
-    width: 90%;
-}
-.divfooter div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.uldiv {
-    padding: 20px 10px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    align-items: center;
-}
-li {
-    list-style: none;
-}
-li span {
-    color: #4f4d4a;
-    font-size: 20px;
-}
-.uldiv1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.uldiv1 li {
-    margin-bottom: 5px;
-
-    color: #4f4d4a;
-}
-.uldiv li {
-    border-radius: 16px;
-    margin: 5px;
-    padding: 8px;
-
+    border-radius: 10px;
+  }
+  
+  .tomarPedido {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: 300ms;
-}
-.uldiv li:hover {
-    background-color: #4f4d4a6e;
-}
-.divFF {
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .tomarPedido:hover {
+    background-color: #0056b3;
+  }
+  
+  
+/* Nuevos Estilos */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
     display: flex;
-    flex-direction: row !important;
-    justify-content: space-around !important;
+    justify-content: center;
     align-items: center;
-}
-.divfooter p {
-    padding: 0 10px;
-}
-.rojo{
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px; /* Máximo ancho reducido */
+    max-height: 80vh; /* Máxima altura para evitar que se salga de la pantalla */
+    overflow-y: auto; /* Habilita el scroll si el contenido es demasiado alto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    position: relative;
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  select,
+  input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button[type="submit"],
+  button[type="button"] {
+    background-color: #28a745; /* Verde */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover,
+  button[type="button"]:hover {
+    background-color: #218838; /* Verde más oscuro al hacer hover */
+  }
+  
+  button[type="button"]:disabled {
+    background-color: #ccc; /* Gris para botones deshabilitados */
+    cursor: not-allowed;
+  }
+  
+  div > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  div > div select {
+    flex-grow: 1;
+  }
+  
+  div > div input[type="number"] {
+    width: 60px;
+  }
+  
+  div > div button {
+    background-color: #dc3545; /* Rojo para el botón de eliminar */
+  }
+  
+  div > div button:hover {
+    background-color: #c82333;
+  }
+  
+  div > span {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    display: block;
+    text-align: right;
+  }
+  .rojo{
     color: red;
-}
+  }
+  
+  

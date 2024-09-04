@@ -16,6 +16,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
     bebida: [],
   });
   const [errorValorPrecio,setValorPrecio]= useState("")
+  
 
   useEffect(() => {
     const getProductos = async () => {
@@ -57,9 +58,18 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
       ...formData,
       [type]: newItems,
     });
+   
   };
 
+
   const addItem = (type) => {
+     // Revisa si el último elemento agregado está vacío
+  const lastItem = formData[type][formData[type].length - 1];
+  
+  // Si el último item está vacío, no permite agregar un nuevo select
+  if (lastItem && lastItem.id === "") {
+    return;
+  }
     const newItem = { id: "", cantidad: 1 };
     setFormData({
       ...formData,
@@ -94,7 +104,19 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
       total_pedido: total, // Añade el total al formData
     }));
   };
+  const deleteComida=(index,type)=>{
+    const newItem= formData[type].filter((_, i)=> i !== index )
+    setFormData({...formData, [type]:newItem})
+    console.log(event)
+  }
+  const deleteBebida=(index,type)=>{
+    const newBebida= formData[type].filter((_, i)=> i !==index)
+    setFormData({
+      ...formData,
+      [type]:newBebida
+    })
 
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -125,7 +147,8 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
       console.error("Error al enviar el pedido:", error);
     }
   };
-
+  
+  
   if (!isOpen) return null;
 
   return (
@@ -149,6 +172,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
           <label>
             Género:
             <select
+
               name="genero"
               value={formData.genero}
               required
@@ -174,7 +198,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
               <div key={index}>
                 <select
                   name="id"
-                  value={item.id}
+                  value={item.id} 
                   onChange={(e) => handleChange(e, index, "comida")}
                 >
                   <option value="">Seleccione comida</option>
@@ -194,9 +218,10 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
                   onChange={(e) => handleChange(e, index, "comida")}
                   min="1"
                 />
+                <button type="button" onClick={()=>deleteComida(index,"comida")}>X</button>
               </div>
             ))}
-            <button type="button" onClick={() => addItem("comida")}>
+            <button type="button" onClick={() => addItem("comida")} >
               Agregar Comida
             </button>
            
@@ -211,23 +236,26 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa }) => {
                   value={item.id}
                   onChange={(e) => handleChange(e, index, "bebida")}
                 >
-                  <option value="">Seleccione bebida</option>
+                  <option  value="">Seleccione bebida</option>
                   {bebidaOptions.map((producto) => (
                     <option
+                    
                       key={producto.id_product}
                       value={producto.id_product}
                     >
                       {producto.name_product}- ${producto.price}
                     </option>
                   ))}
-                </select>
+                </select  >
                 <input
                   type="number"
                   name="cantidad"
                   value={item.cantidad}
                   onChange={(e) => handleChange(e, index, "bebida")}
                   min="1"
+                  
                 />
+                <button type="button" onClick={()=>deleteBebida(index, "bebida")}>X</button>
               </div>
             ))}
             <button type="button" onClick={() => addItem("bebida")}>
