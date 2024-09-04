@@ -27,7 +27,7 @@ const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
           setPedido(data.pedido);
           calcularTotalPedido(data.pedido);
         } catch (error) {
-          console.error("Error al obtener el pedido:", error);
+          console.log("No hay pedido aun");
         }
       }
     };
@@ -39,7 +39,7 @@ const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
         setFoodOptions(data.filter(producto => producto.categoria_id === 601)); // Filtrar comidas
         setDrinkOptions(data.filter(producto => producto.categoria_id === 600)); // Filtrar bebidas
       } catch (error) {
-        console.error("Error al obtener los productos:", error);
+        console.log("No hay producos aun ");
       }
     };
 

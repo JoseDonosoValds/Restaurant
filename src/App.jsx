@@ -17,15 +17,16 @@ function App() {
   useEffect(() => {
     fetchMesaData(); // Obtiene los datos de las mesas al cargar el componente
   }, []);
-
-  const fetchMesaData = async () => {
-    try {
-      const response = await axios.get(endpointMesa);
-      setDataMesa(response.data);
-    } catch (error) {
-      console.log("Error fetching data: ", error);
-    }
-  };
+const fetchMesaData = async () => {
+  try {
+    const response = await axios.get(endpointMesa);
+    // Ordena las mesas por ID para mantener un orden fijo
+    const sortedData = response.data.sort((a, b) => a.id_mesa - b.id_mesa);
+    setDataMesa(sortedData);
+  } catch (error) {
+    console.log("Error fetching data: ", error);
+  }
+};
 
   const openModal = (index, type) => {
     setMesaIdModal(index);
