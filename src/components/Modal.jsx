@@ -7,10 +7,10 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
   const AddPedido = "http://localhost:4000/api/restaurant/addPedido"; 
 
   const [productos, setProductos] = useState([]);
-  const [totalPedido, setTotalPedido] = useState(0); // Nuevo estado para el total del pedido
+  const [totalPedido, setTotalPedido] = useState(0); 
   const [formData, setFormData] = useState({
     camarero_id: "",
-    mesa_id: mesa || "", // Inicializa el estado del formulario con el valor de la prop mesa
+    mesa_id: mesa || "", 
     genero: "",
     comida: [],
     bebida: [],
