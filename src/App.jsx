@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div className="App">
-      <HeaderComponent />
+      <HeaderComponent/>
       <div className="container-grid">
         {dataMesa?.map((mesa) => (
           <div key={mesa.id_mesa} className="container">
