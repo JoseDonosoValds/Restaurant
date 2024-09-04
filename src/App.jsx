@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 import Modal from "./components/Modal";
+import ModalPedido from "./components/ModalPedido";
 
 function App() {
   const endpointMesa = "http://localhost:4000/api/restaurant/mesa";
@@ -9,8 +10,9 @@ function App() {
   const endpointPorPagar = "http://localhost:4000/api/restaurant/entregado";
 
   const [modals, setModals] = useState({});
-  const [modalIndex, setModalIndex] = useState(null);
+  const [modalType, setModalType] = useState(null); // Tipo de modal
   const [dataMesa, setDataMesa] = useState([]);
+  const [mesaIdModal, setMesaIdModal] = useState(null); // ID de la mesa para el modal
 
   useEffect(() => {
     fetchMesaData(); // Obtiene los datos de las mesas al cargar el componente
@@ -19,15 +21,15 @@ function App() {
   const fetchMesaData = async () => {
     try {
       const response = await axios.get(endpointMesa);
-      console.log("Datos de la mesa:", response.data); // Verifica si id_pedido está presente
       setDataMesa(response.data);
     } catch (error) {
       console.log("Error fetching data: ", error);
     }
   };
 
-  const openModal = (index) => {
-    setModalIndex(index);
+  const openModal = (index, type) => {
+    setMesaIdModal(index);
+    setModalType(type);
     setModals((prevModals) => ({
       ...prevModals,
       [index]: true,
@@ -37,13 +39,10 @@ function App() {
   const closeModal = () => {
     setModals((prevModals) => ({
       ...prevModals,
-      [modalIndex]: false,
+      [mesaIdModal]: false,
     }));
-    setModalIndex(null);
-  };
-
-  const handleSubmit = (formData) => {
-    console.log(formData);
+    setMesaIdModal(null);
+    setModalType(null);
   };
 
   const updateMesaState = async () => {
@@ -51,11 +50,9 @@ function App() {
   };
 
   const handlePedidoEntregado = async (id_mesa) => {
-    console.log("ID de la mesa:", id_mesa); // Imprime el ID de la mesa
-
     try {
       await axios.put(endpointPorPagar, {
-        id_mesa, // Envía el id_mesa en lugar del id_pedido
+        id_mesa,
       });
       await updateMesaState();
     } catch (error) {
@@ -86,6 +83,14 @@ function App() {
               <div>
                 <button
                   className="tomarPedido"
+                  onClick={() => openModal(mesa.id_mesa, 'verPedido')}
+                >
+                  Ver pedido
+                </button>
+              </div>
+              <div>
+                <button
+                  className="tomarPedido"
                   onClick={() => handlePagado(mesa.id_mesa)}
                 >
                   Pagado
@@ -100,18 +105,24 @@ function App() {
             </div>
             <button
               className="tomarPedido"
-              onClick={() => openModal(mesa.id_mesa)}
+              onClick={() => openModal(mesa.id_mesa, 'tomarPedido')}
             >
               Tomar pedido {mesa.id_mesa}
             </button>
             <h5>{mesa.estado_mesa}</h5>
 
-            <Modal
-              isOpen={modals[mesa.id_mesa]}
+            <ModalPedido
+              isOpen={modalType === 'verPedido' && mesaIdModal === mesa.id_mesa}
               onClose={closeModal}
-              onSubmit={handleSubmit}
-              mesa={mesa.id_mesa}
-              onUpdateMesa={updateMesaState} // Pasa el callback al modal
+              mesa={mesaIdModal}
+              onUpdateMesa={updateMesaState}
+            />
+            <Modal
+              isOpen={modalType === 'tomarPedido' && mesaIdModal === mesa.id_mesa}
+              onClose={closeModal}
+              mesa={mesaIdModal}
+              onSubmit={() => {}} // Ajusta si es necesario
+              onUpdateMesa={updateMesaState}
             />
           </div>
         ))}
