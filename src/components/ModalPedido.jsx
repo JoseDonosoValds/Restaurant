@@ -27,6 +27,7 @@ const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
           setPedido(data.pedido);
           calcularTotalPedido(data.pedido);
         } catch (error) {
+          console.error("Error al obtener el pedido:", error);
         }
       }
     };
@@ -38,6 +39,7 @@ const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
         setFoodOptions(data.filter(producto => producto.categoria_id === 601)); // Filtrar comidas
         setDrinkOptions(data.filter(producto => producto.categoria_id === 600)); // Filtrar bebidas
       } catch (error) {
+        console.error("Error al obtener los productos:", error);
       }
     };
 
@@ -99,14 +101,18 @@ const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
   };
 
   const handleUpdatePedido = async () => {
-    if (pedido) {
+    if (pedido && mesa) {
       try {
-        await axios.put(endpointUpdatePedido, pedido);
+        // Incluye el ID de la mesa en el pedido
+        const updatedPedido = { ...pedido, id_mesa: mesa };
+        await axios.put(endpointUpdatePedido, updatedPedido);
         alert("Pedido actualizado con éxito");
         onUpdateMesa(); 
       } catch (error) {
         console.error("Error al actualizar el pedido:", error);
       }
+    } else {
+      console.error("Pedido o ID de mesa no están definidos.");
     }
   };
 
