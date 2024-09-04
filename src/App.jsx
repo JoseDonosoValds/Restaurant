@@ -48,15 +48,15 @@ function App() {
 
   return (
     <div className="App">
-      <HeaderComponent/>
+      {/* <HeaderComponent/> */}
       <div className="container-grid">
         {dataMesa?.map((mesa) => (
           <div key={mesa.id_mesa} className="container">
-            <h1>{mesa.name_mesa}</h1>
+            {/* <h1>{mesa.name_mesa}</h1> */}
             <div className="contenedorImagen">
               <img src="../public/mesa2.png" alt="imagen de mesa con copas" />
             </div>
-            <button onClick={() => openModal(mesa.id_mesa)}>
+            <button className="tomarPedido" onClick={() => openModal(mesa.id_mesa)}>
               Tomar pedido {mesa.id_mesa}
             </button>
             <h5>{mesa.estado_mesa}</h5>
@@ -70,7 +70,7 @@ function App() {
           </div>
         ))}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

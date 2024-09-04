@@ -1,28 +1,46 @@
 
 .App {
     text-align: center;
+   
+   
   }
   
   .container-grid {
+    
     height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    /* gap: 10px; */
-    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
   
   .container {
+   padding-top: 5px;
+    margin: 10px;
     border-radius: 5px;
     border-style: none;
     display: flex;
     flex-direction: column;
     justify-content: end;
     margin: 10px;
-    width: 400px;
-    height: 150px;
+    width: 22%;
+    border-style: solid;
+    border-width: 1px;
    
+  }
+  .container .tomarPedido{
+    border-style: none;
+    background-color: rgba(250, 250, 5, 0.705);
+    border-radius: 5px;
+    padding: 5px;
+    border-color: #4f4d4a;
+    margin-bottom: 5px;
+  }
+  .container .tomarPedido:hover{
+    background-color: yellow;
   }
 .container img{
     width: 100%;
