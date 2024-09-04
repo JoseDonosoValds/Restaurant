@@ -55,7 +55,6 @@ function App() {
   return (
     <div className="App">
       <HeaderComponent/>
-      {/* {dataMesa?.map((item)=>(<h1 key={item.id_mesa}><p> hola{item.id_mesa}</p></h1>))} */}
       <div className="container-grid">
         {dataMesa?.map(( index) => (
           <div key={index.id} className="container">
