@@ -5,9 +5,9 @@ import Modal from "./components/Modal";
 import ModalPedido from "./components/ModalPedido";
 
 function App() {
-  const endpointMesa = "http://localhost:4001/api/restaurant/mesa";
-  const endpointLiberarMesa = "http://localhost:4001/api/restaurant/libre";
-  const endpointPorPagar = "http://localhost:4001/api/restaurant/entregado";
+  const endpointMesa = "http://localhost:4000/api/restaurant/mesa";
+  const endpointLiberarMesa = "http://localhost:4000/api/restaurant/libre";
+  const endpointPorPagar = "http://localhost:4000/api/restaurant/entregado";
 
   const [modals, setModals] = useState({});
   const [modalType, setModalType] = useState(null); // Tipo de modal
