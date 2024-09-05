@@ -94,21 +94,31 @@ function App() {
             </div>
             <div className="card-buttons">
               <button
-                className="tomarPedido"
+                className={`tomarPedido ${
+                  mesa.estado_mesa === "Libre" ? "disabled" : ""
+                }`}
                 onClick={() => openModal(mesa.id_mesa, "verPedido")}
+                disabled={mesa.estado_mesa === "Libre"}
               >
                 Ver pedido
               </button>
+
               <button
                 className={`tomarPedido ${
-                  mesa.estado_mesa === "pedido tomado" ? "disabled" : ""
+                  mesa.estado_mesa === "pedido tomado" ||
+                  mesa.estado_mesa === "libre"
+                    ? "disabled"
+                    : ""
                 }`}
                 onClick={() => handlePagado(mesa.id_mesa)}
-                disabled={mesa.estado_mesa === "pedido tomado"}
-
+                disabled={
+                  mesa.estado_mesa === "pedido tomado" ||
+                  mesa.estado_mesa === "libre"
+                }
               >
                 Pagado
               </button>
+
               <button
                 className="tomarPedido"
                 onClick={() => handlePedidoEntregado(mesa.id_mesa)}

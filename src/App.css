@@ -33,6 +33,33 @@
     border: none;                            
   }
   
+  button.tomarPedido.disabled {
+    background-color: rgba(0, 123, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);          
+    cursor: not-allowed;                      
+  }
+  
+  button.tomarPedido:disabled {
+    background-color: rgba(0, 123, 255, 0.5); 
+    color: rgba(255, 255, 255, 0.7);
+    cursor: not-allowed;
+    border: none; 
+  }
+
+
+  button.tomarPedido:disabled {
+    background-color: rgba(0, 123, 255, 0.5); 
+    color: rgba(255, 255, 255, 0.7);
+    cursor: not-allowed;
+    border: none; 
+  }
+
+  button.tomarPedido.libre {
+    background-color: rgba(255, 0, 0, 0.5);   
+    color: rgba(255, 255, 255, 0.7);          
+    cursor: not-allowed;
+  }
+  
   
 /*   .container:hover {
     transform: scale(1.05);
