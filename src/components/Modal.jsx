@@ -34,12 +34,12 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      mesa_id: mesa || "", // Actualiza el valor de mesa_id si cambia la prop
+      mesa_id: mesa || "", 
     }));
   }, [mesa]);
 
   useEffect(() => {
-    calcularTotalPedido(); // Calcula el total cada vez que cambian los productos seleccionados
+    calcularTotalPedido(); 
   }, [formData.comida, formData.bebida]);
 
   const comidaOptions = productos.filter(
@@ -120,6 +120,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
           total_pedido: 0,
         });
         setTotalPedido(0);
+        window.location.reload(); 
       }
     } catch (error) {
       console.error("Error al enviar el pedido:", error);

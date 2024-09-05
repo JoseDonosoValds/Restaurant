@@ -15,18 +15,18 @@ function App() {
   const [mesaIdModal, setMesaIdModal] = useState(null); // ID de la mesa para el modal
 
   useEffect(() => {
-    fetchMesaData(); // Obtiene los datos de las mesas al cargar el componente
+    fetchMesaData(); 
   }, []);
-const fetchMesaData = async () => {
-  try {
-    const response = await axios.get(endpointMesa);
-    // Ordena las mesas por ID para mantener un orden fijo
-    const sortedData = response.data.sort((a, b) => a.id_mesa - b.id_mesa);
-    setDataMesa(sortedData);
-  } catch (error) {
-    console.log("Error fetching data: ", error);
-  }
-};
+
+  const fetchMesaData = async () => {
+    try {
+      const response = await axios.get(endpointMesa);
+      const sortedData = response.data.sort((a, b) => a.id_mesa - b.id_mesa); // Ordena las mesas por ID
+      setDataMesa(sortedData);
+    } catch (error) {
+      console.log("Error fetching data: ", error);
+    }
+  };
 
   const openModal = (index, type) => {
     setMesaIdModal(index);
@@ -74,59 +74,59 @@ const fetchMesaData = async () => {
 
   return (
     <div className="App">
-    <div className="container-grid">
-      {dataMesa?.map((mesa) => (
-        <div key={mesa.id_mesa} className="card">
-          <div className="card-image">
-            <img src="../public/mesa2.png" alt="imagen de mesa con copas" />
+      <div className="container-grid">
+        {dataMesa?.map((mesa) => (
+          <div key={mesa.id_mesa} className="card">
+            <div className="card-image">
+              <img src="../public/mesa2.png" alt="imagen de mesa con copas" />
+            </div>
+            <div className="card-info">
+              <h5>{mesa.estado_mesa}</h5>
+              <button
+                className="tomarPedido"
+                onClick={() => openModal(mesa.id_mesa, 'tomarPedido')}
+                disabled={mesa.estado_mesa === 'pedido tomado'} 
+              >
+                Tomar pedido {mesa.id_mesa}
+              </button>
+            </div>
+            <div className="card-buttons">
+              <button
+                className="tomarPedido"
+                onClick={() => openModal(mesa.id_mesa, 'verPedido')}
+              >
+                Ver pedido
+              </button>
+              <button
+                className="tomarPedido"
+                onClick={() => handlePagado(mesa.id_mesa)}
+              >
+                Pagado
+              </button>
+              <button
+                className="tomarPedido"
+                onClick={() => handlePedidoEntregado(mesa.id_mesa)}
+              >
+                Pedido entregado
+              </button>
+            </div>
+            <ModalPedido
+              isOpen={modalType === 'verPedido' && mesaIdModal === mesa.id_mesa}
+              onClose={closeModal}
+              mesa={mesaIdModal}
+              onUpdateMesa={updateMesaState}
+            />
+            <Modal
+              isOpen={modalType === 'tomarPedido' && mesaIdModal === mesa.id_mesa}
+              onClose={closeModal}
+              mesa={mesaIdModal}
+              onSubmit={() => {}} // Ajusta si es necesario
+              onUpdateMesa={updateMesaState}
+            />
           </div>
-          <div className="card-info">
-            <h5>{mesa.estado_mesa}</h5>
-            <button
-              className="tomarPedido"
-              onClick={() => openModal(mesa.id_mesa, 'tomarPedido')}
-            >
-              Tomar pedido {mesa.id_mesa}
-            </button>
-          </div>
-          <div className="card-buttons">
-            <button
-              className="tomarPedido"
-              onClick={() => openModal(mesa.id_mesa, 'verPedido')}
-            >
-              Ver pedido
-            </button>
-            <button
-              className="tomarPedido"
-              onClick={() => handlePagado(mesa.id_mesa)}
-            >
-              Pagado
-            </button>
-            <button
-              className="tomarPedido"
-              onClick={() => handlePedidoEntregado(mesa.id_mesa)}
-            >
-              Pedido entregado
-            </button>
-          </div>
-          <ModalPedido
-            isOpen={modalType === 'verPedido' && mesaIdModal === mesa.id_mesa}
-            onClose={closeModal}
-            mesa={mesaIdModal}
-            onUpdateMesa={updateMesaState}
-          />
-          <Modal
-            isOpen={modalType === 'tomarPedido' && mesaIdModal === mesa.id_mesa}
-            onClose={closeModal}
-            mesa={mesaIdModal}
-            onSubmit={() => {}} // Ajusta si es necesario
-            onUpdateMesa={updateMesaState}
-          />
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-  
   );
 }
 
