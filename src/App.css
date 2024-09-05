@@ -19,6 +19,20 @@
     text-align: center;
     transition: transform 0.3s ease-in-out;
   }
+
+  button.tomarPedido.disabled {
+    background-color: rgba(0, 123, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);        
+    cursor: not-allowed;                      
+  }
+  
+  button.tomarPedido:disabled {
+    background-color: rgba(0, 123, 255, 0.5); 
+    color: rgba(255, 255, 255, 0.7);        
+    cursor: not-allowed;                      
+    border: none;                            
+  }
+  
   
 /*   .container:hover {
     transform: scale(1.05);

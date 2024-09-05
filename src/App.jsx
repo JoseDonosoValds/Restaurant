@@ -15,7 +15,7 @@ function App() {
   const [mesaIdModal, setMesaIdModal] = useState(null); // ID de la mesa para el modal
 
   useEffect(() => {
-    fetchMesaData(); 
+    fetchMesaData();
   }, []);
 
   const fetchMesaData = async () => {
@@ -83,9 +83,11 @@ function App() {
             <div className="card-info">
               <h5>{mesa.estado_mesa}</h5>
               <button
-                className="tomarPedido"
-                onClick={() => openModal(mesa.id_mesa, 'tomarPedido')}
-                disabled={mesa.estado_mesa === 'pedido tomado'} 
+                className={`tomarPedido ${
+                  mesa.estado_mesa === "pedido tomado" ? "disabled" : ""
+                }`}
+                onClick={() => openModal(mesa.id_mesa, "tomarPedido")}
+                disabled={mesa.estado_mesa === "pedido tomado"}
               >
                 Tomar pedido {mesa.id_mesa}
               </button>
@@ -93,13 +95,17 @@ function App() {
             <div className="card-buttons">
               <button
                 className="tomarPedido"
-                onClick={() => openModal(mesa.id_mesa, 'verPedido')}
+                onClick={() => openModal(mesa.id_mesa, "verPedido")}
               >
                 Ver pedido
               </button>
               <button
-                className="tomarPedido"
+                className={`tomarPedido ${
+                  mesa.estado_mesa === "pedido tomado" ? "disabled" : ""
+                }`}
                 onClick={() => handlePagado(mesa.id_mesa)}
+                disabled={mesa.estado_mesa === "pedido tomado"}
+
               >
                 Pagado
               </button>
@@ -111,13 +117,15 @@ function App() {
               </button>
             </div>
             <ModalPedido
-              isOpen={modalType === 'verPedido' && mesaIdModal === mesa.id_mesa}
+              isOpen={modalType === "verPedido" && mesaIdModal === mesa.id_mesa}
               onClose={closeModal}
               mesa={mesaIdModal}
               onUpdateMesa={updateMesaState}
             />
             <Modal
-              isOpen={modalType === 'tomarPedido' && mesaIdModal === mesa.id_mesa}
+              isOpen={
+                modalType === "tomarPedido" && mesaIdModal === mesa.id_mesa
+              }
               onClose={closeModal}
               mesa={mesaIdModal}
               onSubmit={() => {}} // Ajusta si es necesario

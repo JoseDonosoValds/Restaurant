@@ -259,7 +259,7 @@ const Modal = ({ isOpen, onClose, onSubmit, mesa, onUpdateMesa }) => {
           </div>
           <div>
             <p className="rojo">{errorValorPrecio}</p>
-            <span>Total Pedido: {totalPedido} </span>
+            <span>Total Pedido: ${totalPedido} </span>
           </div>
           <button type="submit">Enviar</button>
         </form>
