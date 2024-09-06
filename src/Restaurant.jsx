@@ -4,15 +4,15 @@ import axios from "axios";
 import Modal from "./components/Modal";
 import ModalPedido from "./components/ModalPedido";
 
-function App() {
+export const Restaurant=()=> {
   const endpointMesa = "http://localhost:4000/api/restaurant/mesa";
   const endpointLiberarMesa = "http://localhost:4000/api/restaurant/libre";
   const endpointPorPagar = "http://localhost:4000/api/restaurant/entregado";
 
   const [modals, setModals] = useState({});
-  const [modalType, setModalType] = useState(null); // Tipo de modal
+  const [modalType, setModalType] = useState(null); 
   const [dataMesa, setDataMesa] = useState([]);
-  const [mesaIdModal, setMesaIdModal] = useState(null); // ID de la mesa para el modal
+  const [mesaIdModal, setMesaIdModal] = useState(null); 
 
   useEffect(() => {
     fetchMesaData();
@@ -148,4 +148,3 @@ function App() {
   );
 }
 
-export default App;
