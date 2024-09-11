@@ -118,6 +118,7 @@ export const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
 
   if (!isOpen) return null;
 
+  
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -195,5 +196,7 @@ export const ModalPedido = ({ isOpen, onClose, mesa, onUpdateMesa }) => {
       </div>
     </div>
   );
+  
 };
+export default ModalPedido;
 
